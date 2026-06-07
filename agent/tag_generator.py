@@ -252,5 +252,10 @@ def generate_tags(health_score: float, product: Dict) -> Dict:
     Returns:
         Tags result dictionary
     """
+    # 1. Use the safe fallback lookup method here:
+    category_tags = product.get('category_tags', [])
+    category = category_tags[0] if category_tags else "default"
+
+    # 2. Keep these original lines so the tool actually runs!
     generator = TagGenerator()
     return generator.generate_tags(health_score, product)
