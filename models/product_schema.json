@@ -1,0 +1,272 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Stone Cold Tracker Data Schema",
+  "description": "JSON Schema validation for Stone Cold Tracker analysis pipeline",
+  "definitions": {
+    "product": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "category",
+        "oxalate_mg_per_100g",
+        "oxalate_type",
+        "bioavailability",
+        "sources",
+        "confidence_score"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$",
+          "description": "Unique product identifier (lowercase, underscores only)"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 100,
+          "description": "Common product name with preparation method"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "leafy_greens",
+            "cruciferous",
+            "root_vegetables",
+            "legumes",
+            "fruits",
+            "nuts_seeds",
+            "grains",
+            "aromatics",
+            "herbs",
+            "beverages",
+            "dairy",
+            "proteins",
+            "processed",
+            "vegetables"
+          ],
+          "description": "Food category classification"
+        },
+        "oxalate_mg_per_100g": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "Oxalate content in milligrams per 100 grams"
+        },
+        "serving_size_grams": {
+          "type": "number",
+          "minimum": 1,
+          "description": "Standard serving size in grams"
+        },
+        "oxalate_per_serving": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Oxalate content per serving"
+        },
+        "oxalate_type": {
+          "type": "string",
+          "enum": ["soluble", "insoluble", "mixed"],
+          "description": "Type of oxalate present"
+        },
+        "bioavailability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Normalized bioavailability factor (0-1)"
+        },
+        "nutrients": {
+          "type": "object",
+          "properties": {
+            "calcium_mg": { "type": "number", "minimum": 0 },
+            "magnesium_mg": { "type": "number", "minimum": 0 },
+            "potassium_mg": { "type": "number", "minimum": 0 },
+            "vitamin_k_mcg": { "type": "number", "minimum": 0 },
+            "vitamin_c_mg": { "type": "number", "minimum": 0 },
+            "vitamin_a_rae": { "type": "number", "minimum": 0 },
+            "folate_mcg": { "type": "number", "minimum": 0 },
+            "fiber_g": { "type": "number", "minimum": 0 },
+            "protein_g": { "type": "number", "minimum": 0 }
+          },
+          "description": "Nutritional profile"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Source identifiers for oxalate data"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence level of data accuracy"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date",
+          "description": "Last verification date (YYYY-MM-DD)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional clinical or nutritional notes"
+        }
+      }
+    },
+    "scoring_result": {
+      "type": "object",
+      "required": ["product_id", "health_score", "category", "factors"],
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "description": "Reference to product database"
+        },
+        "health_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Final normalized health score"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Excellent", "Great", "Good", "Fair", "Poor", "Terrible"],
+          "description": "Rating category"
+        },
+        "emoji": {
+          "type": "string",
+          "description": "Category emoji representation"
+        },
+        "factors": {
+          "type": "object",
+          "required": [
+            "oxalate_factor",
+            "nutrient_factor",
+            "bioavailability_factor",
+            "context_factor"
+          ],
+          "properties": {
+            "oxalate_factor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Oxalate component score"
+            },
+            "nutrient_factor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Nutrient component score"
+            },
+            "bioavailability_factor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Bioavailability component score"
+            },
+            "context_factor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Context component score"
+            }
+          }
+        },
+        "flags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Risk flags or special considerations"
+        },
+        "recommendations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Usage recommendations"
+        }
+      }
+    },
+    "tag_result": {
+      "type": "object",
+      "required": ["tags", "count"],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "pattern": "^#[a-zA-Z0-9]+$"
+          },
+          "description": "Generated hashtags for Instagram"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 10,
+          "description": "Number of tags generated"
+        },
+        "diversity_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Score indicating tag variety"
+        }
+      }
+    },
+    "caption_result": {
+      "type": "object",
+      "required": ["caption", "tags", "medical_disclaimer"],
+      "properties": {
+        "caption": {
+          "type": "string",
+          "maxLength": 2200,
+          "description": "Main Instagram caption text"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^#[a-zA-Z0-9]+$"
+          },
+          "description": "Associated hashtags"
+        },
+        "medical_disclaimer": {
+          "type": "string",
+          "description": "Required medical disclaimer"
+        },
+        "character_count": {
+          "type": "integer",
+          "description": "Total character count including tags"
+        }
+      }
+    },
+    "analysis_result": {
+      "type": "object",
+      "required": ["product", "score", "tags", "caption"],
+      "properties": {
+        "product": {
+          "$ref": "#/definitions/product"
+        },
+        "score": {
+          "$ref": "#/definitions/scoring_result"
+        },
+        "tags": {
+          "$ref": "#/definitions/tag_result"
+        },
+        "caption": {
+          "$ref": "#/definitions/caption_result"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Analysis timestamp"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "product": { "$ref": "#/definitions/product" },
+    "scoring_result": { "$ref": "#/definitions/scoring_result" },
+    "tag_result": { "$ref": "#/definitions/tag_result" },
+    "caption_result": { "$ref": "#/definitions/caption_result" },
+    "analysis_result": { "$ref": "#/definitions/analysis_result" }
+  }
+}
