@@ -1,0 +1,314 @@
+{
+  "products": [
+    {
+      "id": "spinach_fresh_raw",
+      "name": "Spinach, Fresh (Raw)",
+      "category": "leafy_greens",
+      "oxalate_mg_per_100g": 656,
+      "oxalate_per_cup": 656,
+      "serving_size_grams": 30,
+      "oxalate_per_serving": 197,
+      "oxalate_type": "soluble",
+      "bioavailability": 0.8,
+      "nutrients": {
+        "calcium_mg": 99,
+        "magnesium_mg": 79,
+        "potassium_mg": 558,
+        "vitamin_k_mcg": 483,
+        "vitamin_c_mg": 8.4,
+        "fiber_g": 0.6
+      },
+      "sources": ["USDA_FDC_ID_169123", "PMID_9876543"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.95,
+      "notes": "High soluble oxalate when raw; cooking reduces soluble content by 45-60%; bind oxalate with calcium or dairy",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "high" },
+        "boiled": { "oxalate_reduction": 0.50, "soluble_oxalate": "medium" },
+        "steamed": { "oxalate_reduction": 0.25, "soluble_oxalate": "high-medium" }
+      }
+    },
+    {
+      "id": "broccoli_fresh_raw",
+      "name": "Broccoli, Fresh (Raw)",
+      "category": "cruciferous",
+      "oxalate_mg_per_100g": 18,
+      "oxalate_per_cup": 36,
+      "serving_size_grams": 89,
+      "oxalate_per_serving": 16,
+      "oxalate_type": "insoluble",
+      "bioavailability": 0.2,
+      "nutrients": {
+        "calcium_mg": 89,
+        "magnesium_mg": 19,
+        "potassium_mg": 316,
+        "vitamin_k_mcg": 102,
+        "vitamin_c_mg": 89,
+        "fiber_g": 2.4,
+        "protein_g": 2.8
+      },
+      "sources": ["USDA_FDC_ID_169123", "PMID_1234567"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.98,
+      "notes": "Low oxalate, high in calcium which binds remaining oxalate; excellent kidney-friendly option",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "low" },
+        "steamed": { "oxalate_reduction": 0.10, "soluble_oxalate": "low" },
+        "roasted": { "oxalate_reduction": 0.15, "soluble_oxalate": "low" }
+      }
+    },
+    {
+      "id": "carrot_fresh_raw",
+      "name": "Carrot, Fresh (Raw)",
+      "category": "root_vegetables",
+      "oxalate_mg_per_100g": 24,
+      "oxalate_per_cup": 39,
+      "serving_size_grams": 61,
+      "oxalate_per_serving": 15,
+      "oxalate_type": "insoluble",
+      "bioavailability": 0.3,
+      "nutrients": {
+        "calcium_mg": 33,
+        "magnesium_mg": 8,
+        "potassium_mg": 320,
+        "vitamin_a_rae": 961,
+        "fiber_g": 2.8,
+        "vitamin_c_mg": 3.6
+      },
+      "sources": ["USDA_FDC_ID_168409"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.92,
+      "notes": "Low oxalate, excellent source of beta-carotene; good for regular consumption",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "low" },
+        "cooked": { "oxalate_reduction": 0.12, "soluble_oxalate": "low" }
+      }
+    },
+    {
+      "id": "kale_fresh_raw",
+      "name": "Kale, Fresh (Raw)",
+      "category": "leafy_greens",
+      "oxalate_mg_per_100g": 66,
+      "oxalate_per_cup": 99,
+      "serving_size_grams": 67,
+      "oxalate_per_serving": 44,
+      "oxalate_type": "mixed",
+      "bioavailability": 0.5,
+      "nutrients": {
+        "calcium_mg": 135,
+        "magnesium_mg": 34,
+        "potassium_mg": 491,
+        "vitamin_k_mcg": 704,
+        "vitamin_a_rae": 469,
+        "fiber_g": 1.3,
+        "vitamin_c_mg": 53.3
+      },
+      "sources": ["USDA_FDC_ID_168566"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.88,
+      "notes": "Moderate oxalate but high calcium content helps bind it; nutrient powerhouse",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "medium" },
+        "steamed": { "oxalate_reduction": 0.30, "soluble_oxalate": "low-medium" }
+      }
+    },
+    {
+      "id": "bell_pepper_raw",
+      "name": "Bell Pepper, Red (Raw)",
+      "category": "vegetables",
+      "oxalate_mg_per_100g": 5,
+      "oxalate_per_cup": 8,
+      "serving_size_grams": 119,
+      "oxalate_per_serving": 6,
+      "oxalate_type": "insoluble",
+      "bioavailability": 0.1,
+      "nutrients": {
+        "calcium_mg": 7,
+        "magnesium_mg": 12,
+        "potassium_mg": 211,
+        "vitamin_c_mg": 127,
+        "vitamin_a_rae": 117,
+        "fiber_g": 1.7
+      },
+      "sources": ["USDA_FDC_ID_169659"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.96,
+      "notes": "Very low oxalate, excellent vitamin C content; great for kidney health",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "minimal" },
+        "cooked": { "oxalate_reduction": 0.08, "soluble_oxalate": "minimal" }
+      }
+    },
+    {
+      "id": "swiss_chard_raw",
+      "name": "Swiss Chard, Raw",
+      "category": "leafy_greens",
+      "oxalate_mg_per_100g": 102,
+      "oxalate_per_cup": 153,
+      "serving_size_grams": 36,
+      "oxalate_per_serving": 37,
+      "oxalate_type": "soluble",
+      "bioavailability": 0.6,
+      "nutrients": {
+        "calcium_mg": 51,
+        "magnesium_mg": 47,
+        "potassium_mg": 379,
+        "vitamin_k_mcg": 299.5,
+        "fiber_g": 0.6,
+        "vitamin_c_mg": 30
+      },
+      "sources": ["USDA_FDC_ID_169228"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.85,
+      "notes": "Moderate-high oxalate, high soluble content; best enjoyed cooked and in moderation",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "high" },
+        "boiled": { "oxalate_reduction": 0.45, "soluble_oxalate": "medium" }
+      }
+    },
+    {
+      "id": "garlic_fresh",
+      "name": "Garlic, Fresh (Clove)",
+      "category": "aromatics",
+      "oxalate_mg_per_100g": 15,
+      "oxalate_per_clove": 0.2,
+      "serving_size_grams": 3,
+      "oxalate_per_serving": 0.45,
+      "oxalate_type": "insoluble",
+      "bioavailability": 0.15,
+      "nutrients": {
+        "calcium_mg": 18,
+        "magnesium_mg": 2,
+        "potassium_mg": 107,
+        "vitamin_c_mg": 8.7,
+        "fiber_g": 0.2,
+        "protein_g": 0.6
+      },
+      "sources": ["USDA_FDC_ID_170554"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.90,
+      "notes": "Minimal oxalate; used in tiny portions; excellent for flavoring without oxalate concern",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "minimal" },
+        "cooked": { "oxalate_reduction": 0.05, "soluble_oxalate": "minimal" }
+      }
+    },
+    {
+      "id": "green_beans_raw",
+      "name": "Green Beans, Raw",
+      "category": "legumes",
+      "oxalate_mg_per_100g": 25,
+      "oxalate_per_cup": 50,
+      "serving_size_grams": 100,
+      "oxalate_per_serving": 25,
+      "oxalate_type": "mixed",
+      "bioavailability": 0.35,
+      "nutrients": {
+        "calcium_mg": 37,
+        "magnesium_mg": 25,
+        "potassium_mg": 211,
+        "vitamin_k_mcg": 43,
+        "fiber_g": 2.7,
+        "protein_g": 1.8,
+        "vitamin_c_mg": 12
+      },
+      "sources": ["USDA_FDC_ID_169297"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.91,
+      "notes": "Low-moderate oxalate with good calcium content; balanced nutritional profile",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "low-medium" },
+        "steamed": { "oxalate_reduction": 0.20, "soluble_oxalate": "low" }
+      }
+    },
+    {
+      "id": "sweet_potato_raw",
+      "name": "Sweet Potato, Raw",
+      "category": "root_vegetables",
+      "oxalate_mg_per_100g": 60,
+      "oxalate_per_cup": 108,
+      "serving_size_grams": 100,
+      "oxalate_per_serving": 60,
+      "oxalate_type": "mixed",
+      "bioavailability": 0.4,
+      "nutrients": {
+        "calcium_mg": 30,
+        "magnesium_mg": 25,
+        "potassium_mg": 337,
+        "vitamin_a_rae": 961,
+        "fiber_g": 3.0,
+        "vitamin_c_mg": 8.8
+      },
+      "sources": ["USDA_FDC_ID_168483"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.87,
+      "notes": "Moderate oxalate but rich in nutrients; excellent beta-carotene source; enjoy in moderation",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "medium" },
+        "baked": { "oxalate_reduction": 0.20, "soluble_oxalate": "low-medium" }
+      }
+    },
+    {
+      "id": "asparagus_raw",
+      "name": "Asparagus, Raw",
+      "category": "vegetables",
+      "oxalate_mg_per_100g": 21,
+      "oxalate_per_cup": 31,
+      "serving_size_grams": 90,
+      "oxalate_per_serving": 19,
+      "oxalate_type": "insoluble",
+      "bioavailability": 0.25,
+      "nutrients": {
+        "calcium_mg": 24,
+        "magnesium_mg": 14,
+        "potassium_mg": 202,
+        "vitamin_k_mcg": 41.6,
+        "fiber_g": 2.1,
+        "protein_g": 2.2,
+        "folate_mcg": 52
+      },
+      "sources": ["USDA_FDC_ID_169286"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.93,
+      "notes": "Low oxalate, high in folate and vitamins; excellent choice for regular consumption",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "low" },
+        "steamed": { "oxalate_reduction": 0.15, "soluble_oxalate": "low" }
+      }
+    },
+    {
+      "id": "beet_raw",
+      "name": "Beet, Raw",
+      "category": "root_vegetables",
+      "oxalate_mg_per_100g": 49,
+      "oxalate_per_cup": 88,
+      "serving_size_grams": 100,
+      "oxalate_per_serving": 49,
+      "oxalate_type": "soluble",
+      "bioavailability": 0.55,
+      "nutrients": {
+        "calcium_mg": 16,
+        "magnesium_mg": 25,
+        "potassium_mg": 325,
+        "fiber_g": 2.8,
+        "vitamin_c_mg": 4.9,
+        "folate_mcg": 109
+      },
+      "sources": ["USDA_FDC_ID_169143"],
+      "last_updated": "2026-06-07",
+      "confidence_score": 0.84,
+      "notes": "Moderate soluble oxalate; high nitrate content; pair with calcium; enjoy moderately",
+      "preparation_impact": {
+        "raw": { "oxalate_reduction": 0, "soluble_oxalate": "medium" },
+        "cooked": { "oxalate_reduction": 0.35, "soluble_oxalate": "low-medium" }
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-06-07",
+    "total_products": 11,
+    "coverage": "Common vegetables and aromatics",
+    "notes": "Initial database focusing on frequently consumed produce items; expand with additional food groups as needed"
+  }
+}
