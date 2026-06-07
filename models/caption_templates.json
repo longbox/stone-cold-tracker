@@ -1,0 +1,139 @@
+{
+  "caption_templates": {
+    "excellent": [
+      "This green warrior has ZERO oxalate concerns! Load up your plate guilt-free. Perfect for kidney-conscious eating. 💚",
+      "Oxalate-free zone! This powerhouse is safe for daily consumption. Your kidneys will thank you. 🌱",
+      "The ultimate kidney-friendly choice! Eat this daily without worry. Maximum nutrition, zero oxalate stress. ✨",
+      "No oxalate drama here! Pure nutrition and pure peace of mind. This is the gold standard. ⭐",
+      "Kidney health just got easier. This food is your safe daily bet—zero oxalate, maximum benefits! 💪",
+      "Celebrate guilt-free eating! This is the oxalate-free champion you've been looking for. 🎉",
+      "Your kidneys deserve this. Oxalate-free, nutrient-rich, and absolutely delicious. Daily staple material. 🥗"
+    ],
+    "great": [
+      "Great news! This veggie has minimal oxalate AND packs minerals. Your kidney will thank you. 🥒",
+      "Low oxalate + high nutrition = a winning combo! Perfect for regular consumption. 🎯",
+      "Budget-friendly AND kidney-friendly! This is a weekday staple you can feel good about. 💚",
+      "Low oxalate alert—and yes, it's delicious! This beauty fits into your healthy eating plan perfectly. 🌟",
+      "Your new favorite? Low oxalate and seriously nutritious. Eat this several times a week. ✅",
+      "Oxalate-light and nutrient-rich! This is the smart choice for consistent, healthy eating. 💡",
+      "Another win for your kidneys! Low oxalate with excellent nutritional value. Make it a regular. 🏆"
+    ],
+    "good": [
+      "This veggie packs nutrition but needs moderation. Pro tip: pair with calcium-rich foods to reduce oxalate absorption! 🥕",
+      "Good nutrition here! Enjoy 3-4x per week for balanced health. Smart portions = smart eating. 📊",
+      "Nutrient powerhouse with moderate oxalate. The key: smart pairing with dairy or calcium sources. 🧀",
+      "Moderate oxalate? Yes, but the nutrition makes it worth it. Pro strategy: pair with cheese or yogurt. 💡",
+      "This one requires strategy, but it's worth it! Combine with calcium to minimize oxalate absorption. 🎯",
+      "Solid nutrition with moderate oxalate concerns. Solution: enjoy 3-4x weekly with calcium-rich meals. ⚖️",
+      "A balanced choice! Moderate oxalate, high nutrition. Time it right and combine it wisely. ✨"
+    ],
+    "fair": [
+      "Love this veggie? Enjoy it 1-2x weekly and pair with cheese or yogurt to minimize oxalate! Smart eating. 🥗",
+      "Balance is everything! This one deserves special occasion status. Pair wisely, enjoy modestly. ⚖️",
+      "This is better enjoyed as an occasional treat. Combine with calcium-rich foods for best results. 🍽️",
+      "Weekly frequency works best here. When you do eat this, make it count—pair with a calcium source. 🎯",
+      "Moderate your approach! 1-2x per week, paired strategically with calcium-rich options. Smart strategy! 💡",
+      "Save this for deliberate meals, not daily rotation. Pair with dairy to reduce oxalate impact. 📅",
+      "Great taste, moderate oxalate—so limit to special occasions and pair thoughtfully. 🎉"
+    ],
+    "poor": [
+      "This favorite is HIGH in oxalate! If you have kidney concerns, save this for special occasions. Quality over quantity. 🌱",
+      "High oxalate alert! Limit to 1-2x per month maximum. When you do enjoy it, keep portions tiny. ⚠️",
+      "This is a rare indulgence, not a daily choice. If kidney health matters to you, consume sparingly. 🎯",
+      "High oxalate content means you need to be intentional. Once a month or less? Maybe. Always consult your doc. 👨‍⚕️",
+      "Proceed with caution! This one is oxalate-heavy. If you do indulge, make it tiny and infrequent. 🚫",
+      "Save for VERY special occasions. High oxalate makes this a rare-treat item. Seriously. ⛔",
+      "Not a regular player in kidney-conscious eating. Once monthly? Only if your doctor approves. Stay safe. 🏥"
+    ],
+    "terrible": [
+      "⚠️ WARNING: This is EXTREMELY high in oxalate. If kidney health is a concern, consult your doctor before consuming.",
+      "🚫 EXTREME OXALATE: This product requires serious caution. Not recommended for kidney-conscious eating. Speak with your healthcare provider.",
+      "HIGH RISK: This item should be avoided entirely if you have kidney concerns. Always check with your doctor first. 👨‍⚕️",
+      "⛔ SEVERE OXALATE WARNING: This is not a safe choice for oxalate-conscious diets. Professional medical guidance essential.",
+      "🚨 EXTREME CAUTION: Dangerously high oxalate. If kidney health is a priority, this should be completely avoided. See a dietitian.",
+      "❌ NOT RECOMMENDED: The oxalate content here is extreme. Kidney stone formers and CKD patients should absolutely avoid.",
+      "⚠️ MEDICAL ALERT: This food carries serious oxalate risk. Consult with your nephrologist before considering consumption."
+    ]
+  },
+  "caption_variants": {
+    "emotional_appeal": [
+      "Your health matters. Choose wisely! ❤️",
+      "Peace of mind with every bite! 😌",
+      "Eat with confidence, not worry! 💪",
+      "One less thing to stress about! ✨",
+      "Kidney health = peace of mind! 🧘",
+      "Guilt-free eating tastes better! 😋",
+      "Your body will thank you! 🙏"
+    ],
+    "informative": [
+      "Fun fact: {benefit}! 🤓",
+      "Did you know? {property}! 💡",
+      "Science says: {nutrient} = {benefit}! 🔬",
+      "Nutrition breakdown: {calcium}mg calcium, {oxalate}mg oxalate! 📊",
+      "What makes this great: {reason}! ✅",
+      "Here's why this rocks: {benefit}! 🎯",
+      "The secret? {nutrient} content! 🔑"
+    ],
+    "action_oriented": [
+      "Save this for weekly rotation! 📌",
+      "Add to your meal prep NOW! 🍳",
+      "Your shopping list just got smarter! 🛒",
+      "Grab this at the farmers market! 🌾",
+      "Time to restock your fridge! ❄️",
+      "Make this tonight! 👨‍🍳",
+      "Pro move: buy extra! 📦"
+    ],
+    "community_focused": [
+      "Who else loves this? 🙋‍♀️",
+      "Tag someone who needs to know this! 👇",
+      "Share this with your health-conscious friend! 📢",
+      "Spread the kidney-health love! 💚",
+      "Your wellness community thanks you! 👥",
+      "Let's normalize healthy eating! 🌍",
+      "Together, we're making smarter choices! 🤝"
+    ]
+  },
+  "closing_statements": {
+    "positive": [
+      "Your future self will be grateful! 🙏",
+      "This is the way. 🚀",
+      "Health is wealth! 💰",
+      "Invest in your wellness today! 📈",
+      "Because you deserve the best! 👑",
+      "That's what I call a win! 🏆",
+      "Nothing but nutrition here! 🌟"
+    ],
+    "cautionary": [
+      "Consult your healthcare provider with questions! 👨‍⚕️",
+      "Your doctor knows your needs best! 🏥",
+      "Medical advice? Ask a professional! 📋",
+      "Every body is different—get personalized guidance! 🔍",
+      "Not medical advice—just nutrition facts! ⚖️",
+      "Always check with your dietitian! 📞",
+      "Individual results may vary—talk to your doc! 💬"
+    ],
+    "call_to_action": [
+      "Save this for later! 💾",
+      "Share with someone who cares! 📤",
+      "Comment your favorite recipe! 👇",
+      "Follow for more kidney-friendly tips! 🔔",
+      "Double tap if you agree! 👍",
+      "Tag a friend who needs this! 🏷️",
+      "Save and share the kidney health love! ❤️"
+    ]
+  },
+  "emoji_palette": {
+    "health": "💚 ❤️ 🧘 💪 🏆 ✨ ⭐",
+    "food": "🥗 🥒 🥕 🌱 🍽️ 👨‍🍳 🛒",
+    "warning": "⚠️ 🚫 ⛔ 🚨 ❌ 👨‍⚕️ 🏥",
+    "positive": "🎉 🎯 ✅ 👍 💯 🌟 🏅",
+    "neutral": "📊 📈 📋 🔍 💡 🤓 ℹ️"
+  },
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-06-07",
+    "total_templates": 35,
+    "template_categories": 5,
+    "description": "Instagram caption templates for Stone Cold Tracker content generation"
+  }
+}
