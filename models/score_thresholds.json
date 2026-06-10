@@ -1,0 +1,23 @@
+{
+  "scoring_formula": {
+    "oxalate_factor_weight": 0.70,
+    "nutrient_factor_weight": 0.15,
+    "bioavailability_factor_weight": 0.10,
+    "context_factor_weight": 0.05
+  },
+  "oxalate_factor_ranges": [
+    { "max_mg_per_100g": 20, "score": 1.0, "level": "none" },
+    { "max_mg_per_100g": 50, "score": 0.7, "level": "low" },
+    { "max_mg_per_100g": 100, "score": 0.4, "level": "moderate" },
+    { "max_mg_per_100g": 200, "score": 0.2, "level": "high" },
+    { "max_mg_per_100g": 10000, "score": 0.0, "level": "extreme" }
+  ],
+  "rating_categories": [
+    { "min_score": 95, "max_score": 100, "category": "Excellent", "emoji": "⭐", "frequency": "Daily staple" },
+    { "min_score": 85, "max_score": 94, "category": "Great", "emoji": "🌟", "frequency": "Regular consumption" },
+    { "min_score": 70, "max_score": 84, "category": "Good", "emoji": "✓", "frequency": "3-4x per week" },
+    { "min_score": 50, "max_score": 69, "category": "Fair", "emoji": "⚠️", "frequency": "1-2x per week" },
+    { "min_score": 25, "max_score": 49, "category": "Poor", "emoji": "⛔", "frequency": "1-2x per month" },
+    { "min_score": 0, "max_score": 24, "category": "Terrible", "emoji": "🚫", "frequency": "Severe limitation" }
+  ]
+}

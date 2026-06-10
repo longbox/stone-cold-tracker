@@ -1,4 +1,31 @@
 {
-  "cruciferous": ["#healthy", "#greens", "#veggies"],
-  "default": ["#stonecoldtracker", "#nutrition"]
+  "category_tags": {
+    "excellent": ["#OxalateFree", "#KidneyFriendly", "#HealthyDaily", "#ZeroOxalate", "#SafeForKidney", "#NutrientDense", "#SuperFood"],
+    "great": ["#LowOxalate", "#BudgetFriendly", "#QuickMeal", "#FamilyApproved", "#MineralRich", "#VitaminBoost", "#NutritionWin"],
+    "good": ["#ModerateOxalate", "#BalancedBite", "#PortionControl", "#TravelFriendly", "#ConvenientChoice", "#ComfortFood"],
+    "fair": ["#EnjoyInModeration", "#OccasionalTreat", "#MealPairing", "#CombinedWisely", "#SpecialOccasion", "#LimitedServing"],
+    "poor": ["#HighOxalate", "#RareIndulgence", "#NotForEveryDay", "#SipsNotGulps", "#CasualOnly", "#SmallPortion"],
+    "terrible": ["#AvoidIfPossible", "#HighRisk", "#KidneyStress", "#LimitSeverely", "#NotRecommended", "#ConsultDoctor"]
+  },
+  "benefit_tags": {
+    "high_fiber": ["#FiberRich", "#DigestiveHealth", "#GutFriendly", "#CleanEating"],
+    "high_calcium": ["#CalciumBoosted", "#BoneStrength", "#DairyFree", "#StrongBones"],
+    "high_protein": ["#ProteinPacked", "#MuscleSupport", "#PlantBased", "#FitnessFood"],
+    "high_magnesium": ["#MagnesiumRich", "#KidneySupport", "#MineralBoost"],
+    "high_potassium": ["#PotassiumRich", "#HeartHealthy", "#ElectrolyteBoost"],
+    "antioxidant": ["#AntioxidantPower", "#AntiInflammatory", "#CellProtection", "#HealthBoost"],
+    "low_calorie": ["#LowCalorie", "#WeightManagement", "#SlimmeDown", "#HealthySnack"],
+    "organic": ["#Organic", "#NoChemicals", "#FarmFresh", "#Sustainable"],
+    "vegan": ["#VeganFriendly", "#PlantBased", "#CrueltyFree", "#VeganLife"],
+    "gluten_free": ["#GlutenFree", "#CeliacFriendly", "#GlutenSafe", "#SafeToEat"]
+  },
+  "seasonal_tags": {
+    "spring": ["#SpringFresh", "#SeasonalEats", "#FarmToTable", "#GardenFresh"],
+    "summer": ["#SummerVibes", "#LightAndFresh", "#BBQReady", "#SeasonalChoice"],
+    "fall": ["#FallFavs", "#CozyFood", "#HarvestTime", "#AutumnEats"],
+    "winter": ["#WinterWarmer", "#ComfortFood", "#CozyMeals", "#WarmAndFilling"]
+  },
+  "trending_health_tags": {
+    "2026_trending": ["#KidneyDiet", "#OxalateAwareness", "#HealthyKidneys", "#StoneFreeLife", "#KidneyStonePrevention", "#StoneColdTracker"]
+  }
 }
