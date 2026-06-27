@@ -365,3 +365,94 @@ def test_config():
         with open(config_path) as f:
             return json.load(f)
     return None
+
+
+from unittest.mock import MagicMock
+
+class TestMealDecomposer:
+    """Test suite for Meal Decomposer."""
+    
+    def test_meal_decomposition(self):
+        from agent.meal_decomposer import MealDecomposer
+        decomposer = MealDecomposer()
+        result = decomposer.decompose_meal("I had a mixed salad for lunch")
+        assert result["matched"] is True
+        assert result["meal_type"] == "salad"
+        assert len(result["common_ingredients"]) > 0
+        
+    def test_unknown_meal_decomposition(self):
+        from agent.meal_decomposer import MealDecomposer
+        decomposer = MealDecomposer()
+        result = decomposer.decompose_meal("I ate lasagna")
+        assert result["matched"] is False
+        assert len(result["options"]) > 0
+
+    def test_calculate_composite_score(self):
+        from agent.meal_decomposer import MealDecomposer
+        from agent.database_manager import DatabaseManager
+        from agent.health_scorer import HealthScorer
+        
+        decomposer = MealDecomposer()
+        db = DatabaseManager()
+        scorer = HealthScorer()
+        
+        # 50% spinach (656 mg) and 50% broccoli (18 mg) -> average ~ 337 mg
+        components = {
+            "spinach_fresh_raw": 50,
+            "broccoli_fresh_raw": 50
+        }
+        
+        result = decomposer.calculate_composite_score(components, db, scorer)
+        
+        assert "score" in result
+        assert "product" in result
+        assert "components_breakdown" in result
+        
+        virtual_product = result["product"]
+        assert virtual_product["oxalate_mg_per_100g"] == round((656 + 18) / 2, 2)
+        assert virtual_product["nutrients"]["calcium_mg"] == round((99 + 89) / 2, 2)
+        assert result["score"]["health_score"] > 0
+        assert result["score"]["health_score"] < 90  # Spinach drags it down
+
+
+class TestLabelAnalysisIntegration:
+    """Test suite for nutrition label image pipeline."""
+    
+    def test_analyze_label_image(self, monkeypatch):
+        from agent.analysis_pipeline import AnalysisPipeline
+        pipeline = AnalysisPipeline()
+        
+        # Mock analyze_nutrition_and_ingredients to avoid calling OpenAI API
+        mock_response = {
+            "success": True,
+            "product_name": "Mega Greens Powder",
+            "ingredients": ["spinach", "broccoli"],
+            "nutrients": {
+                "calories": 45,
+                "protein_g": 3.0,
+                "fiber_g": 4.5,
+                "calcium_mg": 120,
+                "magnesium_mg": 80,
+                "potassium_mg": 400,
+                "vitamin_c_mg": 60,
+                "oxalate_mg_per_100g": 150
+            },
+            "overall_confidence": "high",
+            "notes": "Rich in minerals"
+        }
+        
+        monkeypatch.setattr(
+            pipeline.image_processor, 
+            "analyze_nutrition_and_ingredients", 
+            MagicMock(return_value=mock_response)
+        )
+        
+        result = pipeline.analyze_label_image("path/to/fake_label.jpg")
+        
+        assert result["success"] is True
+        assert result["product_name"] == "Mega Greens Powder"
+        assert result["product"]["oxalate_mg_per_100g"] == 150
+        assert result["score"]["health_score"] > 0
+        assert len(result["tags"]["tags"]) > 0
+        assert "DISCLAIMER" in result["caption"]["caption"]
+

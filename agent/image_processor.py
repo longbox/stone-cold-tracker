@@ -1,18 +1,18 @@
 """
 Stone Cold Tracker - Image Processor
-Handles image recognition and ingredient identification using OpenAI Vision API.
+Handles image recognition and ingredient/nutrition identification using OpenAI Vision API.
 """
 
 import json
 import base64
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from pathlib import Path
 import os
 
 
 class ImageProcessor:
     """
-    Processes food images and identifies ingredients using OpenAI Vision API.
+    Processes food images and product labels using OpenAI Vision API.
     """
     
     def __init__(self, api_key: Optional[str] = None):
@@ -24,14 +24,47 @@ class ImageProcessor:
         """
         self.api_key = api_key or os.getenv('OPENAI_API_KEY')
         
-        if not self.api_key:
-            raise ValueError("OpenAI API key not provided or set in environment")
+        # We allow running without an API key to support offline fallback modes in tests
+        if self.api_key:
+            try:
+                from openai import OpenAI
+                self.client = OpenAI(api_key=self.api_key)
+            except ImportError:
+                raise ImportError("OpenAI package required: pip install openai>=1.0.0")
+        else:
+            self.client = None
+    
+    def _prepare_image_url_or_base64(self, image_source: str) -> str:
+        """
+        Prepare image for API call (returns a URL or data URL string).
         
-        try:
-            from openai import OpenAI
-            self.client = OpenAI(api_key=self.api_key)
-        except ImportError:
-            raise ImportError("OpenAI package required: pip install openai>=1.0.0")
+        Args:
+            image_source: Image file path or URL
+        
+        Returns:
+            URL or base64 data URL string for OpenAI Vision API
+        """
+        if image_source.startswith(('http://', 'https://')):
+            return image_source
+        
+        image_path = Path(image_source)
+        if not image_path.exists():
+            raise FileNotFoundError(f"Image file not found: {image_source}")
+        
+        with open(image_path, 'rb') as f:
+            image_data = base64.standard_b64encode(f.read()).decode('utf-8')
+        
+        suffix = image_path.suffix.lower()
+        media_type_map = {
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.gif': 'image/gif',
+            '.webp': 'image/webp'
+        }
+        media_type = media_type_map.get(suffix, 'image/jpeg')
+        
+        return f"data:{media_type};base64,{image_data}"
     
     def analyze_image(self, image_source: str) -> Dict:
         """
@@ -43,20 +76,28 @@ class ImageProcessor:
         Returns:
             Dictionary with identified ingredients and confidence scores
         """
-        try:
-            # Prepare image
-            image_data = self._prepare_image(image_source)
+        if not self.api_key or not self.client:
+            return {
+                'success': False,
+                'error': 'OpenAI API key not configured',
+                'ingredients': [],
+                'confidence': 'low'
+            }
             
-            # Call OpenAI Vision API
-            response = self.client.messages.create(
-                model="gpt-4-vision-preview",
+        try:
+            image_url = self._prepare_image_url_or_base64(image_source)
+            
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "user",
                         "content": [
                             {
-                                "type": "image",
-                                "image": image_data
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": image_url
+                                }
                             },
                             {
                                 "type": "text",
@@ -68,7 +109,6 @@ class ImageProcessor:
                 max_tokens=1024
             )
             
-            # Parse response
             return self._parse_vision_response(response)
         
         except Exception as e:
@@ -76,58 +116,77 @@ class ImageProcessor:
                 'success': False,
                 'error': str(e),
                 'ingredients': [],
-                'confidence': 0
+                'confidence': 'low'
             }
-    
-    def _prepare_image(self, image_source: str) -> Dict:
+            
+    def analyze_nutrition_and_ingredients(self, image_source: str) -> Dict:
         """
-        Prepare image for API call (supports file path or URL).
+        Analyze a product label/packaging image to extract ingredients list and nutrition facts.
         
         Args:
             image_source: Image file path or URL
-        
+            
         Returns:
-            Image data dictionary for API
+            Dictionary with extracted product name, ingredients, and nutrients
         """
-        # Check if it's a URL
-        if image_source.startswith(('http://', 'https://')):
+        if not self.api_key or not self.client:
             return {
-                "type": "image",
-                "source": {
-                    "type": "url",
-                    "url": image_source
+                'success': False,
+                'error': 'OpenAI API key not configured',
+                'ingredients': [],
+                'nutrients': {}
+            }
+            
+        try:
+            image_url = self._prepare_image_url_or_base64(image_source)
+            
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": image_url
+                                }
+                            },
+                            {
+                                "type": "text",
+                                "text": self._get_nutrition_analysis_prompt()
+                            }
+                        ]
+                    }
+                ],
+                max_tokens=1024
+            )
+            
+            response_text = response.choices[0].message.content.strip()
+            
+            # Find and parse JSON
+            start_idx = response_text.find('{')
+            end_idx = response_text.rfind('}') + 1
+            if start_idx >= 0 and end_idx > start_idx:
+                data = json.loads(response_text[start_idx:end_idx])
+                return {
+                    'success': True,
+                    'product_name': data.get('product_name', 'Unknown Product'),
+                    'ingredients': data.get('ingredients', []),
+                    'nutrients': {k: v for k, v in data.get('nutrients', {}).items() if v is not None},
+                    'confidence': data.get('overall_confidence', 'medium'),
+                    'notes': data.get('notes', '')
                 }
+            else:
+                raise ValueError("No valid JSON found in response")
+                
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e),
+                'ingredients': [],
+                'nutrients': {}
             }
-        
-        # Handle local file
-        image_path = Path(image_source)
-        
-        if not image_path.exists():
-            raise FileNotFoundError(f"Image file not found: {image_source}")
-        
-        # Encode image to base64
-        with open(image_path, 'rb') as f:
-            image_data = base64.standard_b64encode(f.read()).decode('utf-8')
-        
-        # Determine media type
-        suffix = image_path.suffix.lower()
-        media_type_map = {
-            '.jpg': 'image/jpeg',
-            '.jpeg': 'image/jpeg',
-            '.png': 'image/png',
-            '.gif': 'image/gif',
-            '.webp': 'image/webp'
-        }
-        media_type = media_type_map.get(suffix, 'image/jpeg')
-        
-        return {
-            "type": "image",
-            "source": {
-                "type": "base64",
-                "media_type": media_type,
-                "data": image_data
-            }
-        }
     
     @staticmethod
     def _get_analysis_prompt() -> str:
@@ -153,6 +212,41 @@ Format your response as JSON with the following structure:
     "overall_confidence": "high/medium/low",
     "notes": "any additional observations"
 }"""
+
+    @staticmethod
+    def _get_nutrition_analysis_prompt() -> str:
+        """Get the prompt for extracting product label nutrition facts."""
+        return """Analyze this image of a product label, food packaging, ingredients list, or nutrition facts table.
+Extract the following details if present:
+1. The product name or description.
+2. List of ingredients (simple names).
+3. Detailed nutritional facts (per serving or per 100g):
+   - Calories
+   - Protein (in grams)
+   - Fiber (in grams)
+   - Calcium (in mg)
+   - Magnesium (in mg)
+   - Potassium (in mg)
+   - Vitamin C (in mg)
+   - Oxalate (in mg, if explicitly mentioned)
+   
+Format your response as JSON with the following structure:
+{
+    "product_name": "name of the product or packaging",
+    "ingredients": ["ingredient 1", "ingredient 2", ...],
+    "nutrients": {
+        "calories": value (number or null),
+        "protein_g": value (number or null),
+        "fiber_g": value (number or null),
+        "calcium_mg": value (number or null),
+        "magnesium_mg": value (number or null),
+        "potassium_mg": value (number or null),
+        "vitamin_c_mg": value (number or null),
+        "oxalate_mg_per_100g": value (number or null)
+    },
+    "overall_confidence": "high/medium/low",
+    "notes": "any additional observations"
+}"""
     
     @staticmethod
     def _parse_vision_response(response) -> Dict:
@@ -161,10 +255,7 @@ Format your response as JSON with the following structure:
             # Extract text from response
             response_text = response.choices[0].message.content
             
-            # Try to parse JSON from response
-            import json
-            
-            # Find JSON in response (it might have other text)
+            # Find JSON in response
             start_idx = response_text.find('{')
             end_idx = response_text.rfind('}') + 1
             

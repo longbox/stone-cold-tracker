@@ -4,7 +4,7 @@ Orchestrates the complete analysis workflow: image → scoring → tags → capt
 """
 
 import json
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 from pathlib import Path
 
 from agent.database_manager import DatabaseManager
@@ -12,6 +12,7 @@ from agent.health_scorer import HealthScorer
 from agent.tag_generator import TagGenerator
 from agent.caption_generator import CaptionGenerator
 from agent.image_processor import ImageProcessor
+from agent.meal_decomposer import MealDecomposer
 
 
 class AnalysisPipeline:
@@ -26,6 +27,7 @@ class AnalysisPipeline:
         self.tag_generator = TagGenerator()
         self.caption_generator = CaptionGenerator()
         self.image_processor = ImageProcessor()
+        self.meal_decomposer = MealDecomposer()
     
     def analyze_product(
         self,
@@ -67,6 +69,116 @@ class AnalysisPipeline:
             'score': score_result,
             'tags': tags_result,
             'caption': caption_result,
+            'pipeline_status': 'success'
+        }
+        
+    def analyze_composite_meal(
+        self,
+        components: Dict[str, float],
+        user_context: Optional[Dict] = None
+    ) -> Dict:
+        """
+        Analyze a custom composite meal with proportional ingredients.
+        
+        Args:
+            components: Dictionary mapping product IDs to percentages (e.g. {"spinach_fresh_raw": 60, "carrot_fresh_raw": 40})
+            user_context: Optional user context
+            
+        Returns:
+            Complete analysis result of the composite food mixture
+        """
+        composite_result = self.meal_decomposer.calculate_composite_score(
+            components,
+            self.db_manager,
+            self.health_scorer
+        )
+        
+        composite_product = composite_result["product"]
+        score_result = composite_result["score"]
+        
+        # Generate tags for composite
+        tags_result = self.tag_generator.generate_tags(score_result['health_score'], composite_product)
+        
+        # Generate caption
+        caption_result = self.caption_generator.generate_caption(
+            composite_product,
+            score_result,
+            tags_result['tags']
+        )
+        
+        return {
+            'product': composite_product,
+            'score': score_result,
+            'tags': tags_result,
+            'caption': caption_result,
+            'components_breakdown': composite_result["components_breakdown"],
+            'pipeline_status': 'success'
+        }
+        
+    def analyze_label_image(
+        self,
+        image_source: str,
+        user_context: Optional[Dict] = None
+    ) -> Dict:
+        """
+        Analyze a food nutrition/ingredients label image and score it as a virtual product.
+        
+        Args:
+            image_source: Image file path or URL
+            user_context: Optional user context
+            
+        Returns:
+            Dictionary with parsed label details and composite health score result
+        """
+        label_result = self.image_processor.analyze_nutrition_and_ingredients(image_source)
+        
+        if not label_result.get('success'):
+            return {
+                'success': False,
+                'error': label_result.get('error', 'Label analysis failed'),
+                'pipeline_status': 'label_analysis_failed'
+            }
+            
+        # Build virtual product from extracted nutrition metrics
+        nutrients = label_result.get('nutrients', {})
+        oxalate_mg = nutrients.get('oxalate_mg_per_100g', 0.0) or 0.0
+        
+        virtual_product = {
+            "id": "label_extracted_product",
+            "name": label_result.get('product_name', 'Extracted Label Product'),
+            "category": "extracted",
+            "oxalate_mg_per_100g": oxalate_mg,
+            "oxalate_type": "mixed",
+            "bioavailability": 0.3,
+            "nutrients": nutrients
+        }
+        
+        # Calculate health score
+        score_result = self.health_scorer.calculate_health_score(virtual_product, user_context)
+        
+        # Identify matched database products for extracted ingredients
+        ingredients = label_result.get('ingredients', [])
+        ingredient_mapping = self.image_processor.identify_from_ingredients(
+            ingredients,
+            self.db_manager
+        )
+        
+        # Generate tags and caption
+        tags_result = self.tag_generator.generate_tags(score_result['health_score'], virtual_product)
+        caption_result = self.caption_generator.generate_caption(
+            virtual_product,
+            score_result,
+            tags_result['tags']
+        )
+        
+        return {
+            'success': True,
+            'product_name': virtual_product['name'],
+            'product': virtual_product,
+            'score': score_result,
+            'tags': tags_result,
+            'caption': caption_result,
+            'ingredient_mapping': ingredient_mapping,
             'pipeline_status': 'success'
         }
     
