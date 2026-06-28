@@ -85,6 +85,7 @@ export default function ImageUploader() {
           ref={fileInputRef} 
           onChange={handleFileChange} 
           accept="image/*" 
+          capture="environment"
           style={{ display: 'none' }} 
         />
         

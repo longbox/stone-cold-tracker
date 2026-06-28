@@ -22,7 +22,7 @@ export async function POST(req) {
         {
           role: 'user',
           parts: [
-            { text: 'Analyze this image of food or ingredients. List the identified ingredients and provide an estimation of their oxalate content (Low, Medium, High). Format the output clearly with bullet points. Be concise but informative.' },
+            { text: 'Analyze this image of food or ingredients. List the identified ingredients and provide an estimation of their oxalate content (Low, Medium, High). Cross-reference with modern research, including the Harvard oxalate database and recent testing advancements (e.g., recognizing blueberries as moderate/high, not low). Return the output as valid JSON with exactly two fields: "analysis_text" containing the detailed markdown analysis with bullet points, and "oxalate_score" containing an integer from 0 to 100 representing the overall oxalate level (0 being completely free of oxalates, 100 being dangerously high). Do NOT wrap the JSON in markdown code blocks.' },
             { 
               inlineData: {
                 data: buffer.toString('base64'),
@@ -34,7 +34,15 @@ export async function POST(req) {
       ]
     });
 
-    return NextResponse.json({ analysis: response.text });
+    let resultData;
+    try {
+      resultData = JSON.parse(response.text);
+    } catch (e) {
+      console.warn("Failed to parse JSON, falling back to raw text:", e);
+      resultData = { analysis_text: response.text, oxalate_score: 50 };
+    }
+
+    return NextResponse.json({ analysis: resultData });
   } catch (error) {
     console.error('Error analyzing image:', error);
     return NextResponse.json(
