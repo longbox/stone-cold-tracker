@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown';
+
 export default function ResultsDisplay({ result }) {
   // Check if result is the new object format or fallback to string
   const isObject = typeof result === 'object' && result !== null;
@@ -47,10 +49,9 @@ export default function ResultsDisplay({ result }) {
 
       <div style={{ 
         lineHeight: '1.7', 
-        fontSize: '1.1rem',
-        whiteSpace: 'pre-wrap'
+        fontSize: '1.1rem'
       }}>
-        {analysisText}
+        <ReactMarkdown>{analysisText}</ReactMarkdown>
       </div>
     </div>
   );
